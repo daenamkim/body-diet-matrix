@@ -1,4 +1,6 @@
 # Body Diet Metrix
+### Helping Japanese Tourists Eat American Food
+
 
 ## Project setup
 
