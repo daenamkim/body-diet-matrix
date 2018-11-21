@@ -45,6 +45,7 @@ export default new Vuex.Store({
   },
   mutations: {
     updateNutritionFacts(state, payload) {
+      console.log("HERE!!!!");
       state.productName = payload.productName;
       state.nutritionFacts = payload.nutritionFacts;
     },
@@ -55,6 +56,7 @@ export default new Vuex.Store({
       state.barcode = barcode;
     },
     switchView(state, view) {
+      console.log(view);
       state.view = view;
     },
   },
@@ -84,7 +86,8 @@ export default new Vuex.Store({
         console.log(payload);
       });
     },
-    updateNutritionFacts({ commit }, barcode) {
+    updateBarCode({ commit }, barcode) {
+      commit("setBarCode", barcode);
       // Can't use below due 401 errors from RapidAPI
       // mounted() {
       //   unirest
@@ -104,36 +107,52 @@ export default new Vuex.Store({
         return obj.barcode === barcode;
       });
       const result = temp[0];
-      const response = {
-        productName: result.body.item_name, //result.body is an object, item_name is key value
-        nutritionFacts: [
-          {
-            name: "Sugar",
-            amount: result.body.nf_sugars,
-            rda: 22
-          },
-          {
-            name: "Sodium",
-            amount: result.body.nf_sodium,
-            rda: 22
-          },
-          {
-            name: "Calories",
-            amount: result.body.nf_calories,
-            rda: 22
-          },
-          {
-            name: "Calories From Fat",
-            amount: result.body.nf_calories_from_fat,
-            rda: 22
-          }
-        ]
-      };
-      commit("updateNutritionFacts", response);
+      const response = {};
+      if (result !== undefined) {
+        response = {
+          productName: result.body.item_name, //result.body is an object, item_name is key value
+          nutritionFacts: [
+            {
+              name: "Sugar",
+              amount: result.body.nf_sugars,
+              rda: 22
+            },
+            {
+              name: "Sodium",
+              amount: result.body.nf_sodium,
+              rda: 22
+            },
+            {
+              name: "Calories",
+              amount: result.body.nf_calories,
+              rda: 22
+            },
+            {
+              name: "Calories From Fat",
+              amount: result.body.nf_calories_from_fat,
+              rda: 22
+            }
+          ]
+        };
+      }
+      if (Object.keys(response).length < 1) {
+        console.log("123123");
+        commit("switchView", VIEW_NOT_FOUND);
+      } else {
+        commit("updateNutritionFacts", response);
+        commit("switchView", VIEW_NUTRITION);
+      }
+    },
+    backView({ commit }) {
+      switch (this.state.view) {
+        case VIEW_BARCODE_READER:
+          commit("switchView", VIEW_HOME);
+          break;
+        case VIEW_NOT_FOUND:
+        case VIEW_NUTRITION:
+          commit("switchView", VIEW_BARCODE_READER);
+          break;
+      }
     }
-  },
-  updateBarCode({ commit }, barcode) {
-    commit("setBarCode", barcode);
-    this.actions.updateNutritionFacts(barcode);
   },
 });

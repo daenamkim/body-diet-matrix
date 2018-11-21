@@ -24,10 +24,8 @@ export default {
     };
   },
   methods: {
-    setBarCode: function(barcode) {
-      this.$store.dispatch("updateBarCode", barcode);
-      alert("Barcode ", barcode, " found");
-      console.log("Barcode founf => ", barcode);
+    setBarCode: function(data) {
+      this.$store.dispatch("updateBarCode", data.codeResult.code);
     }
   }
 };

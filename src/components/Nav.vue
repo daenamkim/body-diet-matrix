@@ -9,8 +9,8 @@
     <div>
       <button
         v-if="$store.state.view !== VIEW_BARCODE_READER"
-        v-on:click="close">
-        Close
+        v-on:click="home">
+        Home
       </button>
     </div>
   </div>
@@ -29,10 +29,9 @@ export default {
   }),
   methods: {
     back() {
-      console.log("back");
-
+      this.$store.dispatch("backView");
     },
-    close() {
+    home() {
       this.$store.dispatch("switchView", VIEW_HOME);
     }
   }

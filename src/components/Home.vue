@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div>
-      Some Logo Here!
+      <img src="../assets/logo.png">
     </div>
     <div>
       <button class="start-button" v-on:click="start">Start</button>
