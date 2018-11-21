@@ -40,7 +40,7 @@ export default {
   name: "HelloWorld",
   components: {
     NutritionFacts,
-    BarCodeReader
+    BarCodeReader,
   },
   props: {
     msg: String

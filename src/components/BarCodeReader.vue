@@ -1,17 +1,16 @@
 <template>
-  <div id="barcodereader">
-    <h1>Barcode Reader</h1>
+  <div class="barcode-reader">
     <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-
 import { QuaggaScanner } from "vue-quaggajs";
 
+// TODO: it should turn of a camera when this is not using.
 export default {
-  name: "barcodereader",
+  name: "barcodeReader",
   components: {
     QuaggaScanner
   },
@@ -34,13 +33,13 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
+<style scoped>
 #interactive {
   margin: 10px 25%;
   height: 480px;
 }
-#barcodereader {
-  border: 1px solid black;
+
+.barcode-reader {
+  background-color: lightgreen;
 }
 </style>
