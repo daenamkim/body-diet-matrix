@@ -1,11 +1,20 @@
 <template>
   <div class="home">
-    <div>
-      <img src="../assets/logo.png">
-    </div>
-    <div>
-      <button class="start-button" v-on:click="start">Start</button>
-    </div>
+    <v-app>
+      <v-toolbar-title>Body Diet Matrix</v-toolbar-title>
+      <v-container fluid>
+        <v-layout justify-space-around>
+          <v-flex sm5 xs10>
+            <v-layout column>
+              <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>
+            </v-layout>
+          </v-flex>
+        </v-layout>
+        <div>
+          <v-btn color="info" v-on:click="start">Start</v-btn>
+        </div>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
@@ -19,8 +28,23 @@ export default {
       this.$store.dispatch("switchView", VIEW_BARCODE_READER);
     }
   },
+  data: () => ({
+    clipped: false,
+    drawer: true,
+    fixed: false,
+    items: [
+      { icon: 'bubble_chart', title: 'Inspire' }
+    ],
+    miniVariant: false,
+    right: true,
+    rightDrawer: false,
+    title: 'Vuetify.js'
+  }),
 }
 </script>
 
 <style scoped>
+.home {
+  margin: 0;
+}
 </style>

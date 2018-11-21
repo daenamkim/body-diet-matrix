@@ -2,7 +2,7 @@
   <div id="app">
     <Home v-if="$store.state.view === VIEW_HOME"/>
     <div v-else>
-      <Nav v-bind:title="$store.state.view" />
+      <Nav :title="$store.state.view" />
       <BarCodeReader v-if="$store.state.view === VIEW_BARCODE_READER" />
       <!-- TODO: not found -->
       <NutritionFacts v-else-if="$store.state.view === VIEW_NUTRITION" />
@@ -42,7 +42,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  margin-bottom: 60px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: #fafafa;
 }
 </style>
