@@ -6,7 +6,7 @@
     <div class="facts">
       <table>
         <thead>
-          <th>Name</th>
+          <th>Fact</th>
           <th>Amount</th>
           <th>RDA</th>
         </thead>
@@ -20,6 +20,9 @@
         </tbody>
       </table>
     </div>
+    <div class="translate-button">
+      <button v-on:click="translate">{{buttonTitles[$store.state.language]}}</button>
+    </div>
   </div>
 </template>
 
@@ -27,10 +30,19 @@
 export default {
   name: "NutritionFacts",
   props: {},
+  data: () => ({
+    buttonTitles: {
+      "ja": "Translate Facts To Japanese",
+      "en": "Translate Facts To English"
+    },
+  }),
+  methods: {
+    translate() {
+      this.$store.dispatch("translate");
+    },
+  },
   mounted() {
     this.$store.dispatch("updateNutritionFacts", this.$store.state.barcode);
-  },
-  methods: {
   },
 };
 </script>
