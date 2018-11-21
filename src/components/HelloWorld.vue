@@ -38,13 +38,10 @@ import BarCodeReader from "./BarCodeReader";
 
 export default {
   name: "HelloWorld",
-<<<<<<< HEAD
-=======
   components: {
     NutritionFacts,
     BarCodeReader
   },
->>>>>>> 6b080370202b17f736d737e4bb04ba9b5c57b934
   props: {
     msg: String
   }

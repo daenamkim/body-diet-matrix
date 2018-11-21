@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    barcode: "0",
+    barcode: "",
     productName: "",
     nutritionFacts: [],
     dummyData: [
@@ -58,10 +58,11 @@ export default new Vuex.Store({
       //       //console.log(result.status, result.headers, result.body);
       //     });
       //   }
-      const result = this.state.filter(obj => {
+      barcode = 9300652800654;
+      const temp = this.state.dummyData.filter(obj => {
         return obj.barcode === barcode;
       });
-
+      const result = temp[0];
       const response = {
         productName: result.body.item_name, //result.body is an object, item_name is key value
         nutritionFacts: [
