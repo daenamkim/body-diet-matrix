@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
 import RapidAPI from "rapidapi-connect";
@@ -13,7 +14,7 @@ export default new Vuex.Store({
     language: LANG_JA,
     barcode: "0",
     productName: "",
-    nutritionFacts: [],
+    nutritionFacts: []
   },
   mutations: {
     updateNutritionFacts(state, payload) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     toggleLanguage(state) {
       state.language = state.language === LANG_JA ? LANG_EN : LANG_JA;
     },
+    setBarCode(state, barcode) {
+      state.barcode = barcode;
+    }
   },
   actions: {
     translate({ commit, state }) {
@@ -56,21 +60,25 @@ export default new Vuex.Store({
           {
             name: "Sugar",
             amount: 44,
-            rda: 22,
+            rda: 22
           },
           {
             name: "Sodium",
             amount: 66,
-            rda: 22,
+            rda: 22
           },
           {
             name: "Protein",
             amount: 12,
-            rda: 22,
-          },
-        ],
+            rda: 22
+          }
+        ]
       };
       commit("updateNutritionFacts", response);
-    },
+    }
+  },
+  updateBarCode({ commit }, barcode) {
+    commit("setBarCode", barcode);
+    this.actions.updateNutritionFacts(barcode);
   }
 });

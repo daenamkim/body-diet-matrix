@@ -15,6 +15,7 @@
     "path": "^0.12.7",
     "rapidapi-connect": "^0.0.6",
     "vue": "^2.5.17",
+    "vue-quaggajs": "^1.0.6",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
