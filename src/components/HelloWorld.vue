@@ -27,14 +27,20 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <NutritionFacts />
   </div>
 </template>
 
 <script>
+import NutritionFacts from "./NutritionFacts";
+
 export default {
   name: 'HelloWorld',
+  components: {
+    NutritionFacts,
+  },
   props: {
-    msg: String
+    msg: String,
   }
 }
 </script>
