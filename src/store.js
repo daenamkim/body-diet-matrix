@@ -58,7 +58,6 @@ export default new Vuex.Store({
       //       //console.log(result.status, result.headers, result.body);
       //     });
       //   }
-      barcode = 9300652800654;
       const temp = this.state.dummyData.filter(obj => {
         return obj.barcode === barcode;
       });
