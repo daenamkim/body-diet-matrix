@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
 import RapidAPI from "rapidapi-connect";
@@ -20,32 +19,9 @@ export default new Vuex.Store({
     barcode: "0",
     productName: "",
     nutritionFacts: [],
-    dummyData: [
-      {
-        barcode: 9300652800654,
-        body: {
-          item_name: "Crunchy Peanut Butter",
-          nf_calories: 120.86,
-          nf_calories_from_fat: 90,
-          nf_sodium: 62,
-          nf_sugars: 0.9
-        }
-      },
-      {
-        barcode: 9300652800647,
-        body: {
-          item_name: "Peanut Butter, Smooth",
-          nf_calories: 125.63,
-          nf_calories_from_fat: 95.4,
-          nf_sodium: 86,
-          nf_sugars: 0.9
-        }
-      }
-    ]
   },
   mutations: {
     updateNutritionFacts(state, payload) {
-      console.log("HERE!!!!");
       state.productName = payload.productName;
       state.nutritionFacts = payload.nutritionFacts;
     },
@@ -56,7 +32,6 @@ export default new Vuex.Store({
       state.barcode = barcode;
     },
     switchView(state, view) {
-      console.log(view);
       state.view = view;
     },
   },
@@ -103,11 +78,34 @@ export default new Vuex.Store({
       //       //console.log(result.status, result.headers, result.body);
       //     });
       //   }
-      const temp = this.state.dummyData.filter(obj => {
-        return obj.barcode === barcode;
-      });
+      const dummyData = [
+        {
+          barcode: 9300652800654,
+          body: {
+            item_name: "Crunchy Peanut Butter",
+            nf_calories: 120.86,
+            nf_calories_from_fat: 90,
+            nf_sodium: 62,
+            nf_sugars: 0.9
+          }
+        },
+        {
+          barcode: 9300652800647,
+          body: {
+            item_name: "Peanut Butter, Smooth",
+            nf_calories: 125.63,
+            nf_calories_from_fat: 95.4,
+            nf_sodium: 86,
+            nf_sugars: 0.9
+          }
+        }
+      ];
+      // const temp = this.state.dummyData.filter(obj => {
+      //   return obj.barcode === barcode;
+      // });
+      const temp = dummyData;
       const result = temp[0];
-      const response = {};
+      let response = {};
       if (result !== undefined) {
         response = {
           productName: result.body.item_name, //result.body is an object, item_name is key value
@@ -136,7 +134,6 @@ export default new Vuex.Store({
         };
       }
       if (Object.keys(response).length < 1) {
-        console.log("123123");
         commit("switchView", VIEW_NOT_FOUND);
       } else {
         commit("updateNutritionFacts", response);
