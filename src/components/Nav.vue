@@ -2,7 +2,10 @@
   <div class="nav-bar">
     <v-app>
       <v-toolbar fixed>
-        <v-btn flat v-on:click="back">Back</v-btn>
+        <v-btn flat v-on:click="back">
+          <v-icon dart left>arrow_back</v-icon>
+          Back
+        </v-btn>
         <v-toolbar-title>{{title}}</v-toolbar-title>
       </v-toolbar>
     </v-app>

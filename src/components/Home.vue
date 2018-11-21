@@ -4,7 +4,7 @@
       <v-toolbar-title>Body Diet Matrix</v-toolbar-title>
       <v-container fluid>
         <v-layout justify-space-around>
-          <v-flex sm5 xs10>
+          <v-flex sm8 xs10>
             <v-layout column>
               <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>
             </v-layout>

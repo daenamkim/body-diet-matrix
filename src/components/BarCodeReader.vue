@@ -1,11 +1,19 @@
 <template>
   <div class="barcode-reader">
-    <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner>
+    <!-- TODO: applying a layout to quagga is not working well. -->
+    <v-app>
+      <v-container fluid>
+        <v-layout justify-center>
+          <v-flex xs10>
+            <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
 import { QuaggaScanner } from "vue-quaggajs";
 
 // TODO: it should turn of a camera when this is not using.
@@ -33,11 +41,7 @@ export default {
 
 <style scoped>
 #interactive {
-  margin: 10px 25%;
-  height: 480px;
-}
-
-.barcode-reader {
-  background-color: lightgreen;
+  /* margin: 10px 25%; */
+  /* height: 480px; */
 }
 </style>
