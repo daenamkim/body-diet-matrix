@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-app>
-      <v-toolbar-title>Body Diet Matrix</v-toolbar-title>
+      <v-toolbar-title>Body Diet Metrix</v-toolbar-title>
       <v-container fluid>
         <v-layout justify-space-around>
           <v-flex sm8 xs10>
