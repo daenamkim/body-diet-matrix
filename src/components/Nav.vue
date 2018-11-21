@@ -1,18 +1,11 @@
 <template>
   <div class="nav-bar">
-    <div>
-      <button v-on:click="back">Back</button>
-    </div>
-    <div>
-      <h3>{{title}}</h3>
-    </div>
-    <div>
-      <button
-        v-if="$store.state.view !== VIEW_BARCODE_READER"
-        v-on:click="home">
-        Home
-      </button>
-    </div>
+    <v-app>
+      <v-toolbar fixed>
+        <v-btn flat v-on:click="back">Back</v-btn>
+        <v-toolbar-title>{{title}}</v-toolbar-title>
+      </v-toolbar>
+    </v-app>
   </div>
 </template>
 
@@ -39,14 +32,7 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-  font-size: 45px;
-}
-
 .nav-bar {
-  line-height: 100px;
-  background-color: lightblue;
-  display: flex;
-  justify-content: space-around;
+  height: 64px;
 }
 </style>

@@ -11,7 +11,7 @@
           </v-flex>
         </v-layout>
         <div>
-          <v-btn color="info" v-on:click="start">Start</v-btn>
+          <v-btn class="start-button" color="info" v-on:click="start">Start</v-btn>
         </div>
       </v-container>
     </v-app>
@@ -46,5 +46,9 @@ export default {
 <style scoped>
 .home {
   margin: 0;
+}
+
+.start-button {
+  margin-top: 30px;
 }
 </style>
