@@ -1,19 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <NoResults/>
+    <Home v-if="$store.state.view === VIEW_HOME"/>
+    <div v-else>
+      <Nav :title="$store.state.view" />
+      <BarCodeReader v-if="$store.state.view === VIEW_BARCODE_READER" />
+      <!-- TODO: not found -->
+      <NutritionFacts v-else-if="$store.state.view === VIEW_NUTRITION" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Home from "./components/Home.vue";
+import Nav from "./components/Nav.vue";
+import BarCodeReader from "./components/BarCodeReader.vue";
+// TODO: not found
+import NutritionFacts from "./components/NutritionFacts.vue";
+import { VIEW_HOME, VIEW_NOT_FOUND, VIEW_BARCODE_READER, VIEW_NUTRITION } from "./store";
 
 export default {
   name: "app",
+  data: () => ({
+    VIEW_HOME,
+    VIEW_NOT_FOUND,
+    VIEW_BARCODE_READER,
+    VIEW_NUTRITION
+  }),
   components: {
-    HelloWorld
-  }
+    Home,
+    Nav,
+    BarCodeReader,
+    NutritionFacts,
+  },
 };
 </script>
 
@@ -24,6 +42,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color: #fafafa;
 }
 </style>

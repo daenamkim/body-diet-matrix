@@ -1,9 +1,10 @@
 <template>
   <div class="nutrition-facts">
-    <h3 class="product-name">
-      {{$store.state.productName}}
-    </h3>
-    <div class="facts">
+    <v-app>
+      <div class="product-name">
+        <v-toolbar-title>{{$store.state.productName}}</v-toolbar-title>
+      </div>
+      <v-container fluid>
       <table>
         <thead>
           <th>Fact</th>
@@ -19,15 +20,13 @@
           </tr>
         </tbody>
       </table>
-    </div>
-    <div class="translate-button">
-      <button v-on:click="translate">{{buttonTitles[$store.state.language]}}</button>
-    </div>
+      <v-btn color="info" v-on:click="translate">{{buttonTitles[$store.state.language]}}</v-btn>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
 export default {
   name: "NutritionFacts",
   props: {},
@@ -42,9 +41,6 @@ export default {
       this.$store.dispatch("translate");
     }
   },
-  mounted() {
-    this.$store.dispatch("updateNutritionFacts", this.$store.state.barcode);
-  }
 };
 </script>
 
@@ -54,7 +50,7 @@ export default {
 }
 
 .product-name {
-  margin: 40px 0 0;
+  margin: 20px 0 0;
 }
 
 table {

@@ -1,17 +1,24 @@
 <template>
-  <div id="barcodereader">
-    <h1>Barcode Reader</h1>
-    <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner>
+  <div class="barcode-reader">
+    <!-- TODO: applying a layout to quagga is not working well. -->
+    <v-app>
+      <v-container fluid>
+        <v-layout justify-center>
+          <v-flex xs10>
+            <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-
 import { QuaggaScanner } from "vue-quaggajs";
 
+// TODO: it should turn of a camera when this is not using.
 export default {
-  name: "barcodereader",
+  name: "barcodeReader",
   components: {
     QuaggaScanner
   },
@@ -25,22 +32,16 @@ export default {
     };
   },
   methods: {
-    setBarCode: function(barcode) {
-      this.$store.dispatch("updateBarCode", barcode);
-      alert("Barcode ", barcode, " found");
-      console.log("Barcode founf => ", barcode);
+    setBarCode: function(data) {
+      this.$store.dispatch("updateBarCode", data.codeResult.code);
     }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
+<style scoped>
 #interactive {
-  margin: 10px 25%;
-  height: 480px;
-}
-#barcodereader {
-  border: 1px solid black;
+  /* margin: 10px 25%; */
+  /* height: 480px; */
 }
 </style>
