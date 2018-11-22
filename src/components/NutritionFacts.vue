@@ -32,14 +32,14 @@ export default {
   props: {},
   data: () => ({
     buttonTitles: {
-      "ja": "Translate Facts To Japanese",
-      "en": "Translate Facts To English"
-    },
+      ja: "Translate Facts To Japanese",
+      en: "Translate Facts To English"
+    }
   }),
   methods: {
     translate() {
       this.$store.dispatch("translate");
-    },
+    }
   },
 };
 </script>
