@@ -1,12 +1,9 @@
 <template>
   <div class="barcode-reader">
-    <!-- TODO: applying a layout to quagga is not working well. -->
     <v-app>
       <v-container fluid>
         <v-layout justify-center>
-          <v-flex xs10>
-            <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'" />
-          </v-flex>
+          <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'" />
         </v-layout>
       </v-container>
     </v-app>
@@ -46,7 +43,8 @@ export default {
 
 <style scoped>
 #interactive {
-  /* margin: 10px 25%; */
-  /* height: 480px; */
+  /* Must be set */
+  width: 640px;
+  height: 480px;
 }
 </style>
