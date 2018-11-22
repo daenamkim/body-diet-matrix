@@ -83,10 +83,35 @@ export default new Vuex.Store({
           )
           .header("X-Mashape-Host", "nutritionix-api.p.rapidapi.com")
           .end(result => {
+            const response = {
+              productName: result.body.item_name, //result.body is an object, item_name is key value
+              nutritionFacts: [
+                {
+                  name: "Sugar",
+                  amount: result.body.nf_sugars,
+                  rda: 25 //grams
+                },
+                {
+                  name: "Sodium",
+                  amount: result.body.nf_sodium,
+                  rda: 2000 //milligrams
+                },
+                {
+                  name: "Calories",
+                  amount: result.body.nf_calories,
+                  rda: 2000
+                },
+                {
+                  name: "Calories From Fat",
+                  amount: result.body.nf_calories_from_fat,
+                  rda: 500 //500 calories due 25% of 2000
+                }
+              ]
+            };
             if (result.status !== 200) {
               commit("switchView", VIEW_NOT_FOUND);
             } else {
-              commit("updateNutritionFacts", result.body);
+              commit("updateNutritionFacts", response);
               commit("switchView", VIEW_NUTRITION);
             }
             resolve();
