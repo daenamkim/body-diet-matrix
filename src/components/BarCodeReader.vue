@@ -5,7 +5,7 @@
       <v-container fluid>
         <v-layout justify-center>
           <v-flex xs10>
-            <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner>
+            <quagga-scanner :onDetected="setBarCode" :readerSize="readerSize" :readerType="'ean_reader'" />
           </v-flex>
         </v-layout>
       </v-container>
@@ -15,7 +15,6 @@
 
 <script>
 import { QuaggaScanner } from "vue-quaggajs";
-import { VIEW_BARCODE_READER } from "../store";
 
 // TODO: it should turn of a camera when this is not using.
 export default {
@@ -27,17 +26,19 @@ export default {
     readerSize: {
       width: 640,
       height: 480
-    }
+    },
+    detecting: false,
   }),
   methods: {
-    setBarCode: function(data) {
-      // FIXME: to avoid vue-quaggajs's infinite event callback, using v-show.
-      if (this.$store.state.view !== VIEW_BARCODE_READER) {
-        console.log("Block event callback.");
+    setBarCode: async function(data) {
+      if(this.detecting) {
         return;
       }
+      this.detecting = true;
 
-      this.$store.dispatch("updateBarCode", data.codeResult.code);
+      await this.$store.dispatch("updateBarCode", data.codeResult.code);
+
+      this.detecting = false;
     }
   }
 };

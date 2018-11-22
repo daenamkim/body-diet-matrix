@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import RapidAPI from "rapidapi-connect";
+import unirest from "unirest";
+
 const rapid = new RapidAPI(
   "default-application_5bf4c87fe4b08725af2b08e1",
   "5359323f-3ab8-450b-9e75-7218fc1c41c7"
 );
 const GOOGLE_API_KEY = "AIzaSyA_3qHzgehuRVVfFpfwTNLMsvZhaoEIHzE";
+
 export const LANG_JA = "ja";
 export const LANG_EN = "en";
 export const VIEW_HOME = "Home";
@@ -21,8 +24,7 @@ export default new Vuex.Store({
     language: LANG_JA,
     barcode: "0",
     productName: "",
-    nutritionFacts: [],
-    test: false,  // TODO: for demo toggle result.
+    nutritionFacts: []
   },
   mutations: {
     updateNutritionFacts(state, payload) {
@@ -37,10 +39,7 @@ export default new Vuex.Store({
     },
     switchView(state, view) {
       state.view = view;
-    },
-    test(state, toggle) {
-      state.test = toggle;
-    },
+    }
   },
   actions: {
     switchView({ commit }, view) {
@@ -72,88 +71,52 @@ export default new Vuex.Store({
         });
     },
     updateBarCode({ commit }, barcode) {
-      commit("setBarCode", barcode);
-      // Can't use below due 401 errors from RapidAPI
-      // mounted() {
-      //   unirest
-      //     .get(
-      //       `https://nutritionix-api.p.rapidapi.com/item?upc=${barcode}`
-      //     )
-      //     .header(
-      //       "X-Mashape-Key",
-      //       "krltmsPgUfmsh8D3xNg5RFh035Unp19nowUjsnO22I54TbGKxj"
-      //     )
-      //     .header("X-Mashape-Host", "nutritionix-api.p.rapidapi.com")
-      //     .end(function(result) {
-      //       //console.log(result.status, result.headers, result.body);
-      //     });
-      //   }
-      const dummyData = [
-        {
-          barcode: 9300652800654,
-          body: {
-            item_name: "Crunchy Peanut Butter",
-            nf_calories: 120.86,
-            nf_calories_from_fat: 90,
-            nf_sodium: 62,
-            nf_sugars: 0.9
-          }
-        },
-        {
-          barcode: 9300652800647,
-          body: {
-            item_name: "Peanut Butter, Smooth",
-            nf_calories: 125.63,
-            nf_calories_from_fat: 95.4,
-            nf_sodium: 86,
-            nf_sugars: 0.9
-          }
-        }
-      ];
-      // const temp = this.state.dummyData.filter(obj => {
-      //   return obj.barcode === barcode;
-      // });
-      const temp = dummyData;
-      let result = undefined;
-      if (!this.state.test) {
-        result = temp[0];
-      }
-      commit("test", !this.state.test);
-      let response = {};
-      if (result !== undefined) {
-        response = {
-          productName: result.body.item_name, //result.body is an object, item_name is key value
-          nutritionFacts: [
-            {
-              name: "Sugar",
-              amount: result.body.nf_sugars,
-              rda: 25 //grams
-            },
-            {
-              name: "Sodium",
-              amount: result.body.nf_sodium,
-              rda: 2000 //milligrams
-            },
-            {
-              name: "Calories",
-              amount: result.body.nf_calories,
-              rda: 2000
-            },
-            {
-              name: "Calories From Fat",
-              amount: result.body.nf_calories_from_fat,
-              rda: 500 //500 calories due 25% of 2000
+      return new Promise(resolve => {
+        commit("setBarCode", barcode);
+        unirest
+          .get(
+            `https://cors-anywhere.herokuapp.com/https://nutritionix-api.p.rapidapi.com/v1_1/item?upc=${barcode}`
+          )
+          .header(
+            "X-Mashape-Key",
+            "TZsw5zqqAymshRCEmZxdKKJRHxAGp1dBSInjsnYbVH2iKHL7Ik"
+          )
+          .header("X-Mashape-Host", "nutritionix-api.p.rapidapi.com")
+          .end(result => {
+            const response = {
+              productName: result.body.item_name, //result.body is an object, item_name is key value
+              nutritionFacts: [
+                {
+                  name: "Sugar",
+                  amount: result.body.nf_sugars,
+                  rda: 25 //grams
+                },
+                {
+                  name: "Sodium",
+                  amount: result.body.nf_sodium,
+                  rda: 2000 //milligrams
+                },
+                {
+                  name: "Calories",
+                  amount: result.body.nf_calories,
+                  rda: 2000
+                },
+                {
+                  name: "Calories From Fat",
+                  amount: result.body.nf_calories_from_fat,
+                  rda: 500 //500 calories due 25% of 2000
+                }
+              ]
+            };
+            if (result.status !== 200) {
+              commit("switchView", VIEW_NOT_FOUND);
+            } else {
+              commit("updateNutritionFacts", response);
+              commit("switchView", VIEW_NUTRITION);
             }
-          ]
-        };
-      }
-
-      if (Object.keys(response).length < 1) {
-        commit("switchView", VIEW_NOT_FOUND);
-      } else {
-        commit("updateNutritionFacts", response);
-        commit("switchView", VIEW_NUTRITION);
-      }
+            resolve();
+          });
+      });
     },
     backView({ commit }) {
       switch (this.state.view) {
