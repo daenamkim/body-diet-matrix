@@ -1,7 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import RapidAPI from "rapidapi-connect";
-const rapid = new RapidAPI("default-application_5bf4c87fe4b08725af2b08e1", "5359323f-3ab8-450b-9e75-7218fc1c41c7");
+const rapid = new RapidAPI(
+  "default-application_5bf4c87fe4b08725af2b08e1",
+  "5359323f-3ab8-450b-9e75-7218fc1c41c7"
+);
 const GOOGLE_API_KEY = "AIzaSyA_3qHzgehuRVVfFpfwTNLMsvZhaoEIHzE";
 export const LANG_JA = "ja";
 export const LANG_EN = "en";
@@ -18,7 +21,7 @@ export default new Vuex.Store({
     language: LANG_JA,
     barcode: "0",
     productName: "",
-    nutritionFacts: [],
+    nutritionFacts: []
   },
   mutations: {
     updateNutritionFacts(state, payload) {
@@ -33,7 +36,7 @@ export default new Vuex.Store({
     },
     switchView(state, view) {
       state.view = view;
-    },
+    }
   },
   actions: {
     switchView({ commit }, view) {
@@ -41,25 +44,28 @@ export default new Vuex.Store({
     },
     translate({ commit, state }) {
       const nutritionFacts = [...state.nutritionFacts];
-      const names = nutritionFacts.map((fact) => fact.name);
+      const names = nutritionFacts.map(fact => fact.name);
       if (!names.length) {
         return;
       }
 
-      rapid.call('GoogleTranslate', 'translate', {
-        'string': names,
-        'apiKey': GOOGLE_API_KEY,
-        'targetLanguage': state.language,
-      }).on('success', (payload)=>{
-        const newNutritionFacts = nutritionFacts.map((fact, index) => {
-          fact.name = payload[index];
-          return fact;
+      rapid
+        .call("GoogleTranslate", "translate", {
+          string: names,
+          apiKey: GOOGLE_API_KEY,
+          targetLanguage: state.language
+        })
+        .on("success", payload => {
+          const newNutritionFacts = nutritionFacts.map((fact, index) => {
+            fact.name = payload[index];
+            return fact;
+          });
+          // TODO: why state.nutritionFacts is updated without commit even a new array is created?
+          commit("toggleLanguage");
+        })
+        .on("error", payload => {
+          console.log(payload);
         });
-        // TODO: why state.nutritionFacts is updated without commit even a new array is created?
-        commit("toggleLanguage");
-      }).on('error', (payload)=>{
-        console.log(payload);
-      });
     },
     updateBarCode({ commit }, barcode) {
       commit("setBarCode", barcode);
@@ -113,22 +119,22 @@ export default new Vuex.Store({
             {
               name: "Sugar",
               amount: result.body.nf_sugars,
-              rda: 22
+              rda: 25 //grams
             },
             {
               name: "Sodium",
               amount: result.body.nf_sodium,
-              rda: 22
+              rda: 2000 //milligrams
             },
             {
               name: "Calories",
               amount: result.body.nf_calories,
-              rda: 22
+              rda: 2000
             },
             {
               name: "Calories From Fat",
               amount: result.body.nf_calories_from_fat,
-              rda: 22
+              rda: 500 //500 calories due 25% of 2000
             }
           ]
         };
@@ -151,5 +157,5 @@ export default new Vuex.Store({
           break;
       }
     }
-  },
+  }
 });
