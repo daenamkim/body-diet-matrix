@@ -21,7 +21,8 @@ export default new Vuex.Store({
     language: LANG_JA,
     barcode: "0",
     productName: "",
-    nutritionFacts: []
+    nutritionFacts: [],
+    test: false,  // TODO: for demo toggle result.
   },
   mutations: {
     updateNutritionFacts(state, payload) {
@@ -36,7 +37,10 @@ export default new Vuex.Store({
     },
     switchView(state, view) {
       state.view = view;
-    }
+    },
+    test(state, toggle) {
+      state.test = toggle;
+    },
   },
   actions: {
     switchView({ commit }, view) {
@@ -110,7 +114,11 @@ export default new Vuex.Store({
       //   return obj.barcode === barcode;
       // });
       const temp = dummyData;
-      const result = temp[0];
+      let result = undefined;
+      if (!this.state.test) {
+        result = temp[0];
+      }
+      commit("test", !this.state.test);
       let response = {};
       if (result !== undefined) {
         response = {
@@ -139,6 +147,7 @@ export default new Vuex.Store({
           ]
         };
       }
+
       if (Object.keys(response).length < 1) {
         commit("switchView", VIEW_NOT_FOUND);
       } else {

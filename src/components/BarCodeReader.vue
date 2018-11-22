@@ -15,6 +15,7 @@
 
 <script>
 import { QuaggaScanner } from "vue-quaggajs";
+import { VIEW_BARCODE_READER } from "../store";
 
 // TODO: it should turn of a camera when this is not using.
 export default {
@@ -22,17 +23,20 @@ export default {
   components: {
     QuaggaScanner
   },
-  props: {},
-  data() {
-    return {
-      readerSize: {
-        width: 640,
-        height: 480
-      }
-    };
-  },
+  data: () => ({
+    readerSize: {
+      width: 640,
+      height: 480
+    }
+  }),
   methods: {
     setBarCode: function(data) {
+      // FIXME: to avoid vue-quaggajs's infinite event callback, using v-show.
+      if (this.$store.state.view !== VIEW_BARCODE_READER) {
+        console.log("Block event callback.");
+        return;
+      }
+
       this.$store.dispatch("updateBarCode", data.codeResult.code);
     }
   }

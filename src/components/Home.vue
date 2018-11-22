@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <v-app>
-      <v-toolbar-title>Body Diet Metrix</v-toolbar-title>
+      <div class="title">
+        <v-toolbar-title>Body Diet Metrix</v-toolbar-title>
+      </div>
       <v-container fluid>
         <v-layout justify-space-around>
           <v-flex sm8 xs10>
@@ -46,6 +48,10 @@ export default {
 <style scoped>
 .home {
   margin: 0;
+}
+
+.title {
+  margin-top: 30px;
 }
 
 .start-button {
