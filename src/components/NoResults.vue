@@ -6,21 +6,18 @@
     <div class ="sorry-pic">
        <img class = "really" src="../assets/really.png" alt="Really?" />
     </div>
-  <div class ="error-msg">
-    <p>
-      Sorry the item you have scanned is not food or does not reside in our database.
-    </p>
-    <p>
-      Please go back to main page.
-    </p>
-    
-  </div>
-
+    <div class ="error-msg">
+      <p>
+        Sorry the item you have scanned is not food or does not reside in our database.
+      </p>
+      <p>
+        Please go back to main page.
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
 export default {
   name: "NoResults",
   props: {}
@@ -35,6 +32,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  padding-left: 10%;
+  padding-right: 10%;
   padding-block-end: 2em;
   font-size: calc(30px + 2vmin);
 }

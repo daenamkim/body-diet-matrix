@@ -12,7 +12,7 @@
           <th>RDA</th>
         </thead>
         <tbody>
-          <tr v-for="fact in $store.state.nutritionFacts" v-bind:key="fact.name">
+          <tr v-for="(fact, index) in $store.state.nutritionFacts" :key="index">
             <td>{{fact.name}}</td>
             <td v-if="fact.amount > fact.rda" class="warning">{{fact.amount}}</td>
             <td v-if="fact.amount <= fact.rda" class="normal">{{fact.amount}}</td>

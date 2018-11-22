@@ -3,9 +3,10 @@
     <Home v-if="$store.state.view === VIEW_HOME"/>
     <div v-else>
       <Nav :title="$store.state.view" />
-      <BarCodeReader v-if="$store.state.view === VIEW_BARCODE_READER" />
-      <!-- TODO: not found -->
-      <NutritionFacts v-else-if="$store.state.view === VIEW_NUTRITION" />
+      <!-- FIXME: to avoid vue-quaggajs's infinite event callback, using v-show. -->
+      <BarCodeReader v-show="$store.state.view === VIEW_BARCODE_READER" />
+      <NutritionFacts v-show="$store.state.view === VIEW_NUTRITION" />
+      <NoResults v-show="$store.state.view === VIEW_NOT_FOUND" />
     </div>
   </div>
 </template>
@@ -14,8 +15,8 @@
 import Home from "./components/Home.vue";
 import Nav from "./components/Nav.vue";
 import BarCodeReader from "./components/BarCodeReader.vue";
-// TODO: not found
 import NutritionFacts from "./components/NutritionFacts.vue";
+import NoResults from "./components/NoResults.vue";
 import { VIEW_HOME, VIEW_NOT_FOUND, VIEW_BARCODE_READER, VIEW_NUTRITION } from "./store";
 
 export default {
@@ -31,6 +32,7 @@ export default {
     Nav,
     BarCodeReader,
     NutritionFacts,
+    NoResults,
   },
 };
 </script>
