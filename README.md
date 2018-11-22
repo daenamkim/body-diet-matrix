@@ -67,7 +67,7 @@ It supports **EAN** barcode only as of now but you can change a setting.
 
 ### Show result
 
-Once barcode is detected, it will show English nutrition Facts.
+Once barcode is detected, it will show English nutrition facts.
 
 ![Result in English](./readme/result-en.png)
 
