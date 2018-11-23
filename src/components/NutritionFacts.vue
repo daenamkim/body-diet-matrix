@@ -14,8 +14,8 @@
         <tbody>
           <tr v-for="(fact, index) in $store.state.nutritionFacts" :key="index">
             <td>{{fact.name}}</td>
-            <td v-if="fact.amount > fact.rda" class="warning">{{fact.amount}}</td>
-            <td v-if="fact.amount <= fact.rda" class="normal">{{fact.amount}}</td>
+            <td v-if="fact.amount > (fact.rda / 4)" class="warning">{{fact.amount}}</td>
+            <td v-if="fact.amount <= (fact.rda / 4)" class="normal">{{fact.amount}}</td>
             <td>{{fact.rda}}</td>
           </tr>
         </tbody>
@@ -79,6 +79,6 @@ td:nth-child(1) {
 }
 
 .warning {
-  background-color: lightcoral;
+  background-color: #fe4040;
 }
 </style>
