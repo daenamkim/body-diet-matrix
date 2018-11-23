@@ -88,34 +88,34 @@ export default new Vuex.Store({
           .header("x-app-key", "054eb8e64b50c0c5f96c6dd213c0ce1c")
           .end(result => {
             console.log(result);
-            const response = {
-              productName: result.body.foods[0].item_name, //result.body foods[0].is an object, item_name is key value
-              nutritionFacts: [
-                {
-                  name: "Sugar (g)",
-                  amount: result.body.foods[0].nf_sugars,
-                  rda: 25 //grams
-                },
-                {
-                  name: "Sodium (mg)",
-                  amount: result.body.foods[0].nf_sodium,
-                  rda: 2000 //milligrams
-                },
-                {
-                  name: "Calories (kcal)",
-                  amount: result.body.foods[0].nf_calories,
-                  rda: 2000
-                },
-                {
-                  name: "Total Fats (g)",
-                  amount: result.body.foods[0].nf_total_fat,
-                  rda: 60 // 60 total fats
-                }
-              ]
-            };
             if (result.status !== 200) {
               commit("switchView", VIEW_NOT_FOUND);
             } else {
+              const response = {
+                productName: result.body.foods[0].item_name, //result.body foods[0].is an object, item_name is key value
+                nutritionFacts: [
+                  {
+                    name: "Sugar (g)",
+                    amount: result.body.foods[0].nf_sugars,
+                    rda: 25 //grams
+                  },
+                  {
+                    name: "Sodium (mg)",
+                    amount: result.body.foods[0].nf_sodium,
+                    rda: 2000 //milligrams
+                  },
+                  {
+                    name: "Calories (kcal)",
+                    amount: result.body.foods[0].nf_calories,
+                    rda: 2000
+                  },
+                  {
+                    name: "Total Fats (g)",
+                    amount: result.body.foods[0].nf_total_fat,
+                    rda: 60 // 60 total fats
+                  }
+                ]
+              };
               commit("updateNutritionFacts", response);
               commit("switchView", VIEW_NUTRITION);
             }
