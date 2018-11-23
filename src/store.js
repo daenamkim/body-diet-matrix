@@ -74,37 +74,42 @@ export default new Vuex.Store({
       return new Promise(resolve => {
         commit("setBarCode", barcode);
         unirest
-          .get(
-            `https://cors-anywhere.herokuapp.com/https://nutritionix-api.p.rapidapi.com/v1_1/item?upc=${barcode}`
-          )
-          .header(
-            "X-Mashape-Key",
-            "TZsw5zqqAymshRCEmZxdKKJRHxAGp1dBSInjsnYbVH2iKHL7Ik"
-          )
-          .header("X-Mashape-Host", "nutritionix-api.p.rapidapi.com")
+          // FIXME: Here is the problem of Rakuten Rapid API.
+          // .get(
+          //   `https://cors-anywhere.herokuapp.com/https://nutritionix-api.p.rapidapi.com/v1_1/item?upc=${barcode}`
+          // )
+          // .header(
+          //   "X-Mashape-Key",
+          //   "hztRjR9IHOmshbEtnlKueRv0ed67p1ekwcgjsn0IK9Cwxr7Kdq"
+          // )
+          // .header("X-Mashape-Host", "nutritionix-api.p.rapidapi.com")
+          .get(`https://trackapi.nutritionix.com/v2/search/item?upc=${barcode}`)
+          .header("x-app-id", "78eb62e8")
+          .header("x-app-key", "054eb8e64b50c0c5f96c6dd213c0ce1c")
           .end(result => {
+            console.log(result);
             const response = {
-              productName: result.body.item_name, //result.body is an object, item_name is key value
+              productName: result.body.foods[0].item_name, //result.body foods[0].is an object, item_name is key value
               nutritionFacts: [
                 {
-                  name: "Sugar",
-                  amount: result.body.nf_sugars,
+                  name: "Sugar (g)",
+                  amount: result.body.foods[0].nf_sugars,
                   rda: 25 //grams
                 },
                 {
-                  name: "Sodium",
-                  amount: result.body.nf_sodium,
+                  name: "Sodium (mg)",
+                  amount: result.body.foods[0].nf_sodium,
                   rda: 2000 //milligrams
                 },
                 {
-                  name: "Calories",
-                  amount: result.body.nf_calories,
+                  name: "Calories (kcal)",
+                  amount: result.body.foods[0].nf_calories,
                   rda: 2000
                 },
                 {
-                  name: "Calories From Fat",
-                  amount: result.body.nf_calories_from_fat,
-                  rda: 500 //500 calories due 25% of 2000
+                  name: "Total Fats (g)",
+                  amount: result.body.foods[0].nf_total_fat,
+                  rda: 60 // 60 total fats
                 }
               ]
             };
