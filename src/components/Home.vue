@@ -6,9 +6,9 @@
       </div>
       <v-container fluid>
         <v-layout justify-space-around>
-          <v-flex sm8 xs10>
+          <v-flex xs6>
             <v-layout column>
-              <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>
+              <v-img src="https://picsum.photos/510/200?random" aspect-ratio="1.7"></v-img>
             </v-layout>
           </v-flex>
         </v-layout>
